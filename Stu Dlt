@@ -1,0 +1,43 @@
+package in.sp.backend;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+public class StuDel {
+	dbcon ob1;
+	StuDel(dbcon ob1)
+	{
+		this.ob1 = ob1;
+	}
+	public static void main(String[] args) throws Exception {
+		// TODO Auto-generated method stub
+		Connection con =dbcon.getCon();
+		
+		String s = "delete from  Student where name = ?";
+		PreparedStatement ps = con.prepareStatement(s);
+		ps.setString(1, "pavan");
+		int i = ps.executeUpdate();
+		if(i>0)
+		{
+			System.out.println("deletion done");
+		}
+		else
+		{
+			System.out.println("not done");
+		}		
+    con.close();		
+		String p = "select * from student";
+		PreparedStatement p5 = con.prepareStatement(p);
+		Statement s2 = con.createStatement();
+		ResultSet rs = p5.executeQuery();
+		while(rs.next())
+		{
+			String name = rs.getString(1);
+			String password = rs.getString(2);
+			String email = rs.getString(3);
+			System.out.println(name +" "+password+ " " + email);
+		}
+	}
+
+}
