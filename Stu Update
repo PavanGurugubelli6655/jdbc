@@ -1,0 +1,45 @@
+package in.sp.backend;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+public class StuUpdate {
+	dbcon ob1;
+	StuUpdate(dbcon ob1)
+	{
+		this.ob1 = ob1;
+	}
+	public static void main(String[] args) throws Exception {
+		Connection con =dbcon.getCon();
+		String updateQuery = "UPDATE  Student SET password = ?, email = ? WHERE name = ?";
+        PreparedStatement ps = con.prepareStatement(updateQuery);
+        ps.setString(1, "Ramya123"); 
+        ps.setString(2, "Ramya@1");
+        ps.setString(3, "Ramya");
+		int i = ps.executeUpdate();
+		if(i>0)
+		{
+			System.out.println("Updation done");
+		}
+		else
+		{
+			System.out.println("not done");
+		}
+        con.close();
+		String p = "select * from student";
+		PreparedStatement p5 = con.prepareStatement(p);
+		Statement s2 = con.createStatement();
+		ResultSet rs = p5.executeQuery();
+		while(rs.next())
+		{
+			String name = rs.getString(1);
+			String password = rs.getString(2);
+			String email = rs.getString(3);
+			System.out.println(name +" "+password+ " " + email);
+		}
+		
+		
+	}		
+		
+
+}
